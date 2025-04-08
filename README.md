@@ -77,34 +77,7 @@ Restaura el valor anterior del frame base y retorna al caller.
 
 ## Ejercicio 2
 
-Analiza los ejecutables `mindreader` y `mindreader2`. ¿Eres capaz de saber cual está compilada desde C, y cual desde python? ¿Por qué?
-
-El archivo mindreader está compilado en C, mientras que mindreader2 está hecho en Python. Esto se puede deducir porque en el main de mindreader2 aparece una instrucción como lea rdi, str._PYI_APPLICATION_HOME_DIR ; 0x4090cc ; "_PYI_APPLICATION_HOME_DIR", que es un indicio claro de que el binario fue generado desde un script Python.
-
-## Ejercicio 3
-
-Ambos ejecutables tienen una flag, intenta hacer que el programa te de la flag (no sirve encontrarlas mediante `strings`) y apunta ambas.
-
-El ejecutable ***mindreader*** depués de un analísis hacemos:
-
-```bash
-aaa
-afl
-iz main
-```
-La flag es NOTNULL
-
-El ejecutable ***mindreader2*** depués de un analísis hacemos:
-
-```bash
-aaa
-/ flag
-```
-Relacionado con la flag de este pyi-python-flagPy_GIL_DISABLED
-
-## Ejercicio 4
-
-Analiza el ejecutable `serial-check` y obtén acceso a la flag.
+Analiza el ejecutable `serial-check` y obtén acceso a la aplicación. 
 
 ```bash
 aaa
@@ -114,3 +87,28 @@ iz
 ```
 
 <img src="./r2_accesoconcedido.png"/>
+
+## Ejercicio 3
+
+Modifica el ejecutable de `serial-check` para que acepte el serial `pass1234`.
+
+```bash
+r2 -w  ./serial-check
+aaa
+iz
+wx 70617373313233340000000000000000000000 @ 0x00002024
+q
+```
+
+<img src="./r2_pass.png"/>
+
+## Ejercicio 4
+
+Analiza los ejecutables `mindreader` y `mindreader2`. ¿Eres capaz de saber cual está compilada desde C, y cual desde python? ¿Por qué?
+
+El archivo mindreader está compilado en C, mientras que mindreader2 está hecho en Python. Esto se puede deducir porque en el main de mindreader2 aparece una instrucción como lea rdi, str._PYI_APPLICATION_HOME_DIR ; 0x4090cc ; "_PYI_APPLICATION_HOME_DIR", que es un indicio claro de que el binario fue generado desde un script Python.
+
+## Ejercicio 5
+
+Ambos ejecutables tienen una flag, intenta hacer que el programa te de la flag. **NO** sirve encontrar la flag como un string, debes provocar que el ejecutable lo devuelva en tiempo de ejecución.
+
