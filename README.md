@@ -112,3 +112,20 @@ El archivo mindreader está compilado en C, mientras que mindreader2 está hecho
 
 Ambos ejecutables tienen una flag, intenta hacer que el programa te de la flag. **NO** sirve encontrar la flag como un string, debes provocar que el ejecutable lo devuelva en tiempo de ejecución.
 
+El ejecutable ***mindreader***, como he conseguido la flag:
+
+```bash
+r2 -d ./ejecutable
+aaa
+afl
+pdf @ main
+db "0x56354c90e33e" DE LA FUNCION QUE LLAMA PARA ELEGIR LA CLAVE
+dc
+dr rdi
+psz @ "Valor que me del 'dr rdi'"
+dc
+```
+Después de hacer el dc podemos introducir la clave que nos ha dado y ver la flag que es **NOTNULL**
+
+<img src="./r2_5_1.png"/>
+
